@@ -44,7 +44,7 @@ function ProjectCards(props) {
           </Card.Text>
           <div style={{ marginTop: "auto" }}>
             {props.ghlink && (
-              <Button variant="primary" href={props.ghLink} target="_blank">
+              <Button variant="primary" href={props.ghlink} target="_blank">
                 <BsGithub /> &nbsp;
                 {"GitHub"}
               </Button>
