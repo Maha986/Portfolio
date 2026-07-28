@@ -1,28 +1,34 @@
 import React from "react";
 import ExperienceCard from "./ExperienceCard";
-import ned from "../../Assets/ned.png";
-import boossto from "../../Assets/boossto.jfif"
+import { RevealGroup } from "../motion/Reveal";
+
 export default function Experience() {
   return (
-    <div>
+    <RevealGroup className="timeline" stagger={0.08}>
       <ExperienceCard
-        imgPath={ned}
+        company={"Radium"}
+        languages={"React | Tailwind CSS | Storybook | REST APIs | Accessibility"}
+        title="Software Engineer"
+        description="Building and maintaining a design system for Canon that's shared across multiple departments, prototyping components in Storybook, and working on accessibility. Also build APIs and integrate them into React + Tailwind CSS projects across the frontend, backend, and database layers."
+        time="Aug 2023 — Present"
+        current
+      />
+
+      <ExperienceCard
         company={"EAK Library @ NED"}
         languages={"JavaScript | Ajax | APIs"}
         title="Web Developer"
-        description="Transferred NED University Library to utilize cost-free Google Books and Open
-              Library APIs."
+        description="Transferred NED University Library to utilize cost-free Google Books and Open Library APIs."
         time="March 2022"
       />
 
       <ExperienceCard
-        imgPath={boossto}
         company={"Boossto Software"}
         languages={"PHP Laravel | HTML | CSS | MySQL"}
-        title="Php Laravel Developer - Intern"
-        description="Worked on Laravel Framework, perfomed Frontend and Backend tasks alongs with bugs correction."
-        time="April 2022 - June 2022 "
+        title="PHP Laravel Developer — Intern"
+        description="Worked on the Laravel framework, performing frontend and backend tasks alongside bug fixes."
+        time="Apr — Jun 2022"
       />
-    </div>
+    </RevealGroup>
   );
 }

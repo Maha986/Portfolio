@@ -1,64 +1,92 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import Particle from "../Particle";
-import Techstack from "./Techstack";
-import Aboutcard from "./AboutCard";
-import laptopImg from "../../Assets/about.png";
+import { Reveal, RevealGroup, RevealItem } from "../motion/Reveal";
+import Marquee from "../motion/Marquee";
 import Education from "./Education";
 import Experience from "./Experience";
+import Expertise from "./Expertise";
+
+const STATS = [
+  { value: "2023", label: "Joined Radium" },
+  { value: "Canon", label: "Design system client" },
+  { value: "NED", label: "BE, Software Engineering" },
+  { value: "Karachi", label: "Based in, Pakistan" },
+];
+
+const TECH = [
+  "React",
+  "Tailwind CSS",
+  "Redux",
+  "Storybook",
+  "JavaScript",
+  "Node.js",
+  "Express",
+  "PHP",
+  "MongoDB",
+  "MySQL",
+  "Git",
+];
 
 function About() {
   return (
-    <Container fluid className="about-section">
-      <Particle />
-      <Container>
-        <Row style={{ justifyContent: "center", padding: "10px" }}>
-          <Col
-            md={7}
-            style={{
-              justifyContent: "center",
-              paddingTop: "30px",
-              paddingBottom: "50px",
-            }}
-          >
-            <h1 style={{ fontSize: "2.1em", paddingBottom: "20px", textTransform:"uppercase" }}>
-              Welcome to My <strong className="purple">Portfolio</strong>
-            </h1>
-            <Aboutcard />
-          </Col>
-          <Col
-            md={5}
-            style={{ paddingTop: "120px", paddingBottom: "50px" }}
-            className="about-img"
-          >
-            <img src={laptopImg} alt="about" className="img-fluid" />
-          </Col>
-        </Row>
+    <div>
+      <section className="about-hero">
+        <div className="statement">
+          <Reveal className="eyebrow">About</Reveal>
+          <Reveal as="h1" className="statement-text" delay={0.1}>
+            I build <em>websites and web applications</em> &mdash; from the
+            interface down to the data behind it. At{" "}
+            <strong>Radium</strong>, that includes the design system{" "}
+            <strong>Canon's</strong> teams build on every day.
+          </Reveal>
+        </div>
 
-        <h1 className="project-heading purple">
-          <span className="purple">Education</span>
-          
-        </h1>
+        <RevealGroup className="stat-strip" stagger={0.08}>
+          {STATS.map((s) => (
+            <RevealItem as="div" className="stat" key={s.label}>
+              <div className="stat-value">{s.value}</div>
+              <div className="stat-label">{s.label}</div>
+            </RevealItem>
+          ))}
+        </RevealGroup>
+      </section>
 
-        <Education/>
-        
-        <h1 className="project-heading purple">
-        <span className="purple">Experience</span>
+      <section className="section">
+        <div className="section-head">
+          <Reveal className="eyebrow">What I do at Radium</Reveal>
+          <Reveal as="h2" className="section-title" delay={0.1}>
+            Design systems, <em>end to end</em>
+          </Reveal>
+        </div>
+        <Expertise />
+      </section>
 
-          
-        </h1>
+      <section className="section" style={{ paddingTop: 0 }}>
+        <Reveal className="eyebrow" style={{ marginBottom: 24 }}>
+          Toolbox
+        </Reveal>
+        <Marquee items={TECH} speed={32} />
+      </section>
 
-        <Experience/>
+      <section className="section">
+        <div className="section-head">
+          <Reveal className="eyebrow">Journey</Reveal>
+          <Reveal as="h2" className="section-title" delay={0.1}>
+            Experience
+          </Reveal>
+        </div>
+        <Experience />
+      </section>
 
-        <h1 className="project-heading">
-          Professional <strong className="purple">Skillset </strong>
-        </h1>
-
-        <Techstack />
-
-       
-      </Container>
-    </Container>
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="section-head">
+          <Reveal className="eyebrow">Background</Reveal>
+          <Reveal as="h2" className="section-title" delay={0.1}>
+            Education
+          </Reveal>
+        </div>
+        <Education />
+      </section>
+    </div>
   );
 }
 

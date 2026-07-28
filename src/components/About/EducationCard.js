@@ -1,53 +1,20 @@
 import React from "react";
-import Card from "react-bootstrap/Card";
+import { RevealItem } from "../motion/Reveal";
 
-function EducationCard(props) {
+export default function EducationCard(props) {
   return (
-    <Card className="education-card">
-      <Card.Img
-        src={props.imgPath}
-        alt="card-img"
-        className="education-image"
-      />
-      <Card.Body>
-        <Card.Title>{props.title}</Card.Title>
-
-        <ul style={{ listStyleType: "square" }}>
-          <li>
-            <Card.Text style={{ textAlign: "justify", marginBottom: 0 }}>
-              {props.description}
-            </Card.Text>
-          </li>
-          <li>
-            <Card.Text style={{ textAlign: "justify", marginBottom: 0 }}>
-              {props.time}
-            </Card.Text>
-          </li>
-          <li>
-            <Card.Text style={{ textAlign: "justify", marginBottom: 0 }}>
-              {props.merit}
-            </Card.Text>
-          </li>
-          <li>
-            <Card.Text style={{ textAlign: "justify", marginBottom: 0 }}>
-              {" "}
-              <span
-                style={{
-                  textDecoration: "underline",
-                  textDecorationColor: "#623686",
-                  textDecorationThickness: 3,
-                }}
-              >
-                {props.grade}: {props.cgpa}
-              </span>
-            </Card.Text>
-          </li>
-        </ul>
-
-        {"\n"}
-        {"\n"}
-      </Card.Body>
-    </Card>
+    <RevealItem as="div" className="timeline-row">
+      <div className="timeline-year">{props.time}</div>
+      <div>
+        <div className="timeline-role">{props.title}</div>
+        <div className="timeline-org">{props.merit}</div>
+        <p className="timeline-desc">{props.description}</p>
+        <div className="timeline-tags">
+          <span>
+            {props.grade}: {props.cgpa}
+          </span>
+        </div>
+      </div>
+    </RevealItem>
   );
 }
-export default EducationCard;

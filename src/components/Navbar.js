@@ -1,116 +1,122 @@
-import React, { useState } from "react";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import Container from "react-bootstrap/Container";
-import logo from "../Assets/logo.png";
-import { Link, useNavigate } from "react-router-dom";
-import {
-  AiOutlineHome,
-  AiOutlineFundProjectionScreen,
-  AiOutlineUser,
-} from "react-icons/ai";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 
-import { CgFileDocument } from "react-icons/cg";
-import {IoIosContact} from "react-icons/io";
+const LINKS = [
+  { to: "/", label: "Home", n: "01" },
+  { to: "/about", label: "About", n: "02" },
+  { to: "/project", label: "Work", n: "03" },
+  { to: "/resume", label: "Resume", n: "04" },
+];
 
 function NavBar() {
-  const [expand, updateExpanded] = useState(false);
-  const [navColour, updateNavbar] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  function scrollHandler() {
-    if (window.scrollY >= 20) {
-      updateNavbar(true);
-    } else {
-      updateNavbar(false);
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > 20);
     }
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+  }, [open]);
+
+  function goContact() {
+    setOpen(false);
+    navigate("/");
+    setTimeout(() => {
+      const el = document.getElementById("contact");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }, 150);
   }
 
-  window.addEventListener("scroll", scrollHandler);
-const navigate = useNavigate();
   return (
-    <Navbar
-      expanded={expand}
-      fixed="top"
-      expand="md"
-      className={navColour ? "sticky" : "navbar"}
-    >
-      <Container>
-        <Navbar.Brand href="/" className="d-flex">
-          <img src={logo} className="img-fluid logo" alt="brand" />
-        </Navbar.Brand>
-        <Navbar.Toggle
-          aria-controls="responsive-navbar-nav"
-          onClick={() => {
-            updateExpanded(expand ? false : "expanded");
-          }}
+    <>
+      <nav className={`nav-root ${scrolled ? "is-scrolled" : ""}`}>
+        <Link to="/" className="nav-brand" data-cursor="Home">
+          Maha Javed<span>.</span>
+        </Link>
+
+        <ul className="nav-links">
+          {LINKS.map((link) => (
+            <li key={link.to}>
+              <Link
+                to={link.to}
+                className={location.pathname === link.to ? "active" : ""}
+                data-cursor={link.label}
+              >
+                <span className="n">{link.n}</span>
+                {link.label}
+              </Link>
+            </li>
+          ))}
+          <li>
+            <a href="#contact" onClick={(e) => { e.preventDefault(); goContact(); }} data-cursor="Say hi">
+              <span className="n">05</span>
+              Contact
+            </a>
+          </li>
+        </ul>
+
+        <button
+          className={`nav-toggle ${open ? "is-open" : ""}`}
+          aria-label="Toggle navigation"
+          onClick={() => setOpen((o) => !o)}
         >
-          <span></span>
-          <span></span>
-          <span></span>
-        </Navbar.Toggle>
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="ms-auto" defaultActiveKey="#home">
-            <Nav.Item>
-              <Nav.Link as={Link} to="/" onClick={() => updateExpanded(false)}>
-                <AiOutlineHome style={{ marginBottom: "2px" }} /> Home
-              </Nav.Link>
-            </Nav.Item>
+          <span />
+          <span />
+          <span />
+        </button>
+      </nav>
 
-            <Nav.Item>
-              <Nav.Link
-                as={Link}
-                to="/about"
-                onClick={() => updateExpanded(false)}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="nav-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <ul className="nav-overlay-links">
+              {LINKS.map((link, i) => (
+                <motion.li
+                  key={link.to}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.08 * i, duration: 0.5 }}
+                >
+                  <Link to={link.to}>
+                    <span className="n">{link.n}</span>
+                    {link.label}
+                  </Link>
+                </motion.li>
+              ))}
+              <motion.li
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.08 * LINKS.length, duration: 0.5 }}
               >
-                <AiOutlineUser style={{ marginBottom: "2px" }} /> About
-              </Nav.Link>
-            </Nav.Item>
-
-            <Nav.Item>
-              <Nav.Link
-                as={Link}
-                to="/project"
-                onClick={() => updateExpanded(false)}
-              >
-                <AiOutlineFundProjectionScreen
-                  style={{ marginBottom: "2px" }}
-                />{" "}
-                Projects
-              </Nav.Link>
-            </Nav.Item>
-
-            <Nav.Item>
-              <Nav.Link
-                as={Link}
-                to="/resume"
-                onClick={() => updateExpanded(false)}
-              >
-                <CgFileDocument style={{ marginBottom: "2px" }} /> Resume
-              </Nav.Link>
-            </Nav.Item>
-
-            <Nav.Item>
-              <Nav.Link
-                // as={Link}
-                // to="/#contact"
-                onClick={() =>{ navigate("/");
-                setTimeout(() => {
-                 const contactSection = document.getElementById("contact");
-                 if (contactSection) {
-                   contactSection.scrollIntoView({ behavior: "smooth" });
-                 }
-               }, 100); updateExpanded(false)}}
-              >
-                <IoIosContact style={{ marginBottom: "2px", color:"white", fontSize: "24px" }} /> Contact
-              </Nav.Link>
-            </Nav.Item>
-
-
-            
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+                <a href="#contact" onClick={(e) => { e.preventDefault(); goContact(); }}>
+                  <span className="n">05</span>
+                  Contact
+                </a>
+              </motion.li>
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
