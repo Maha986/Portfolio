@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense, lazy } from "react";
 import Preloader from "./components/Pre";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home/Home";
-import About from "./components/About/About";
-import Projects from "./components/Projects/Projects";
 import Footer from "./components/Footer";
-import Resume from "./components/Resume/ResumeNew";
 import Cursor from "./components/motion/Cursor";
 import ScrollProgress from "./components/motion/ScrollProgress";
 import PageFade from "./components/motion/PageFade";
@@ -20,29 +17,34 @@ import { AnimatePresence } from "framer-motion";
 import ScrollToTop from "./components/ScrollToTop";
 import "./style.css";
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+
+const About = lazy(() => import("./components/About/About"));
+const Projects = lazy(() => import("./components/Projects/Projects"));
+const Resume = lazy(() => import("./components/Resume/ResumeNew"));
 
 function AnimatedRoutes() {
   const location = useLocation();
   return (
     <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageFade><Home /></PageFade>} />
-        <Route path="/project" element={<PageFade><Projects /></PageFade>} />
-        <Route path="/about" element={<PageFade><About /></PageFade>} />
-        <Route path="/resume" element={<PageFade><Resume /></PageFade>} />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
+      <Suspense fallback={<div className="route-fallback" />}>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<PageFade><Home /></PageFade>} />
+          <Route path="/project" element={<PageFade><Projects /></PageFade>} />
+          <Route path="/about" element={<PageFade><About /></PageFade>} />
+          <Route path="/resume" element={<PageFade><Resume /></PageFade>} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </Suspense>
     </AnimatePresence>
   );
 }
 
 function App() {
-  const [load, upadateLoad] = useState(true);
+  const [load, setLoad] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      upadateLoad(false);
+      setLoad(false);
     }, 1100);
 
     return () => clearTimeout(timer);

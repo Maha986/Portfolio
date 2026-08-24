@@ -1,21 +1,61 @@
-import React, { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import ReactPlayer from "react-player";
+import React, { useEffect, useRef } from "react";
 import { Reveal } from "../motion/Reveal";
-import attire_demo from "../../Assets/Projects/videos/attire.mp4";
-import cloud3_demo from "../../Assets/Projects/videos/cloud3.mp4";
-import notewise_demo from "../../Assets/Projects/videos/notewise.mp4";
-import proprogrammers_demo from "../../Assets/Projects/videos/proprogrammer.mp4";
 
-const DEMOS = {
-  attire: attire_demo,
-  cloud3: cloud3_demo,
-  notewise: notewise_demo,
-  proprogrammer: proprogrammers_demo,
-};
+function ChapterVideo({ src, poster, alt }) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    // Respect reduced-motion preferences instead of forcing autoplay on everyone.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.preload = "metadata";
+      return undefined;
+    }
+    let observer;
+    // Defer attaching until after the first paint so layout has settled —
+    // otherwise elements can briefly report an inaccurate position and
+    // every video on the page ends up "in view" at once.
+    const raf = requestAnimationFrame(() => {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            el.play().catch(() => {});
+          } else {
+            el.pause();
+          }
+        },
+        { threshold: 0.35 }
+      );
+      observer.observe(el);
+    });
+    return () => {
+      cancelAnimationFrame(raf);
+      if (observer) observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      poster={poster}
+      muted
+      loop
+      playsInline
+      preload="none"
+      aria-label={alt}
+      style={{ cursor: "pointer" }}
+      onClick={(e) => {
+        const v = e.currentTarget;
+        if (v.paused) v.play().catch(() => {});
+        else v.pause();
+      }}
+    />
+  );
+}
 
 function ProjectCards(props) {
-  const [show, setShow] = useState(false);
   const reversed = props.index % 2 === 1;
 
   return (
@@ -25,14 +65,27 @@ function ProjectCards(props) {
       </span>
 
       <div className="chapter-inner">
-        <Reveal className="chapter-media" y={0} data-cursor={props.video ? "View demo" : "Project"}>
-          <img
-            src={props.imgPath}
-            alt={props.title}
-            onClick={() => props.video && setShow(true)}
-            style={{ cursor: props.video ? "pointer" : "default" }}
-          />
-          {props.video && <span className="chapter-media-tag">Watch demo</span>}
+        <Reveal className="chapter-media" y={0} data-cursor="Project">
+          {props.video ? (
+            <ChapterVideo src={props.video} poster={props.imgPath} alt={props.title} />
+          ) : props.imgPath ? (
+            <img
+              src={props.imgPath}
+              alt={props.title}
+              loading={props.index === 0 ? "eager" : "lazy"}
+            />
+          ) : (
+            <div className="chapter-media-empty">
+              <span>{props.emptyLabel || "No preview available"}</span>
+            </div>
+          )}
+
+          {(props.video || props.imgPath) && (
+            <div className="chapter-media-overlay">
+              <span className="chapter-media-name">{props.title}</span>
+              <span className="chapter-media-tag">{props.tag}</span>
+            </div>
+          )}
         </Reveal>
 
         <Reveal className="chapter-body" delay={0.1}>
@@ -41,6 +94,17 @@ function ProjectCards(props) {
           <p className="chapter-desc">{props.description}</p>
 
           <div className="chapter-links">
+            {props.liveLink && (
+              <a
+                className="text-link"
+                href={props.liveLink}
+                target="_blank"
+                rel="noreferrer"
+                data-cursor="Visit"
+              >
+                Visit site <span className="arrow">&#8599;</span>
+              </a>
+            )}
             {props.ghlink && (
               <a
                 className="text-link"
@@ -52,38 +116,20 @@ function ProjectCards(props) {
                 View on GitHub <span className="arrow">&#8599;</span>
               </a>
             )}
-            {props.video && (
+            {props.instagram && (
               <a
                 className="text-link"
-                href="#watch"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setShow(true);
-                }}
-                data-cursor="Watch"
+                href={props.instagram}
+                target="_blank"
+                rel="noreferrer"
+                data-cursor="Instagram"
               >
-                Watch demo <span className="arrow">&#8599;</span>
+                View on Instagram <span className="arrow">&#8599;</span>
               </a>
             )}
           </div>
         </Reveal>
       </div>
-
-      <AnimatePresence>
-        {show && (
-          <motion.div
-            className="lightbox"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <button className="lightbox-close" onClick={() => setShow(false)} aria-label="Close">
-              &#10005;
-            </button>
-            <ReactPlayer url={DEMOS[props.video]} width="90%" height="80%" controls playing />
-          </motion.div>
-        )}
-      </AnimatePresence>
     </article>
   );
 }
