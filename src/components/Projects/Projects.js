@@ -5,14 +5,14 @@ import cloud3 from "../../Assets/Projects/cloud3.jpeg";
 import proprogrammer from "../../Assets/Projects/Picture1.png";
 import attire from "../../Assets/Projects/attire.png";
 import notewise from "../../Assets/Projects/notewise.PNG";
-import cloud3_demo from "../../Assets/Projects/videos/cloud3.mp4";
-import proprogrammer_demo from "../../Assets/Projects/videos/proprogrammer.mp4";
-import attire_demo from "../../Assets/Projects/videos/attire.mp4";
-import notewise_demo from "../../Assets/Projects/videos/notewise.mp4";
-import idonatio_demo from "../../Assets/Projects/videos/iDonatio.mp4";
-import univision_demo from "../../Assets/Projects/videos/Univision.mp4";
-import tracker_demo from "../../Assets/Projects/videos/tracker fieldwork.mp4";
-import metanoia_demo from "../../Assets/Projects/videos/metanoia 2.mp4";
+import cloud3Demo from "../../Assets/Projects/videos/cloud3.mp4";
+import proprogrammerDemo from "../../Assets/Projects/videos/proprogrammer.mp4";
+import attireDemo from "../../Assets/Projects/videos/attire.mp4";
+import notewiseDemo from "../../Assets/Projects/videos/notewise.mp4";
+import idonatioDemo from "../../Assets/Projects/videos/iDonatio.mp4";
+import univisionDemo from "../../Assets/Projects/videos/Univision.mp4";
+import trackerDemo from "../../Assets/Projects/videos/tracker-fieldwork.mp4";
+import metanoiaDemo from "../../Assets/Projects/videos/metanoia-2.mp4";
 
 const WORK = [
   {
@@ -22,7 +22,7 @@ const WORK = [
     description:
       "A single line of code that adds text resizing, high-contrast modes, text-to-speech, and screen-reader support to any website. Built in-house at Radium — a natural extension of the accessibility work behind Canon's design system.",
     liveLink: "https://inclusense.eu/",
-    emptyLabel: "inclusense_demo",
+    emptyLabel: "Demo coming soon",
   },
   {
     title: "Radium — the agency's own site",
@@ -31,7 +31,7 @@ const WORK = [
     description:
       "The studio's own site — case studies, service pages, and the brand story for a digital agency working with clients like Canon Europe. Built and maintained as part of the in-house frontend team.",
     liveLink: "https://frontend.radiumagency.com/",
-    emptyLabel: "radium_demo",
+    emptyLabel: "Demo coming soon",
   },
   {
     title: "iDonatio — a giving platform",
@@ -40,7 +40,7 @@ const WORK = [
     description:
       "A web portal for charities, religious organizations, and individuals to manage incoming donations, paired with a donor-facing app for secure giving, automated Gift Aid claims, and real-time tracking.",
     liveLink: "https://www.idonatio.com/",
-    video: idonatio_demo,
+    video: idonatioDemo,
   },
   {
     title: "UniVision — university selection, simplified",
@@ -49,7 +49,7 @@ const WORK = [
     description:
       "An EdTech platform helping high-school students and their counselors compare 2,500+ universities, build watchlists, and get personalized recommendations, with an AI essay grader and a counselor-facing chatbot.",
     liveLink: "https://univision.hk/",
-    video: univision_demo,
+    video: univisionDemo,
   },
   {
     title: "Tracker — BCBA fieldwork documentation",
@@ -58,7 +58,7 @@ const WORK = [
     description:
       "A documentation tool for Board Certified Behavior Analysts and their trainees, built to simplify BACB-compliant fieldwork tracking and keep the required seven years of records organized and secure.",
     instagram: "https://www.instagram.com/supervision_tracker/reels/",
-    video: tracker_demo,
+    video: trackerDemo,
   },
   {
     title: "Metanoia — a Web3 community platform",
@@ -67,7 +67,7 @@ const WORK = [
     description:
       "The frontend for an NFT-driven Web3 community brand, pairing a token-gated member experience with the kind of visual polish more commonly seen on traditional consumer products.",
     instagram: "https://www.instagram.com/metanoiacountry/",
-    video: metanoia_demo,
+    video: metanoiaDemo,
   },
   {
     title: "Admin Dashboard",
@@ -75,7 +75,7 @@ const WORK = [
     languages: "React",
     description:
       "An internal admin dashboard for managing users, content, and day-to-day operations — the unglamorous but essential control room behind a production product.",
-    emptyLabel: "admin_demo",
+    emptyLabel: "Demo coming soon",
   },
 ];
 
@@ -87,7 +87,7 @@ const PERSONAL = [
     languages: "React · Node.js · Tailwind CSS · Sequelize (MySQL) · IPFS · Blockchain",
     description:
       "A storage platform that enhances the privacy and availability of user data by storing it in encrypted form on IPFS and logging metadata on the blockchain, with a companion browser extension for key management.",
-    video: cloud3_demo,
+    video: cloud3Demo,
   },
   {
     imgPath: proprogrammer,
@@ -96,7 +96,7 @@ const PERSONAL = [
     languages: "PHP · HTML · CSS · jQuery · MySQL",
     description:
       "A versatile web application with programming tutorials in written and video format, quizzes, assignments and certifications, chat, a note-keeping system, and an online library.",
-    video: proprogrammer_demo,
+    video: proprogrammerDemo,
     ghlink: "https://github.com/Maha986/ProProgrammers/",
   },
   {
@@ -106,7 +106,7 @@ const PERSONAL = [
     languages: "React · Material UI",
     description:
       "A complete, responsive UI for an online shopping experience — built with React and Material UI, focused on usability and visual polish across devices.",
-    video: attire_demo,
+    video: attireDemo,
     ghlink: "https://github.com/Maha986/The-Attire",
   },
   {
@@ -116,7 +116,7 @@ const PERSONAL = [
     languages: "React · Bootstrap · Node.js · MongoDB",
     description:
       "A full-stack MERN platform for managing notes on the cloud, letting users create, update, and organize their notes without the hassle of local storage.",
-    video: notewise_demo,
+    video: notewiseDemo,
     ghlink: "https://github.com/Maha986/iNotebook",
   },
 ];

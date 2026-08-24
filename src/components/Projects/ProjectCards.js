@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Reveal } from "../motion/Reveal";
 
 function ChapterVideo({ src, poster, alt }) {
   const ref = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   useEffect(() => {
     const el = ref.current;
@@ -35,6 +36,17 @@ function ChapterVideo({ src, poster, alt }) {
     };
   }, []);
 
+  const togglePlay = (e) => {
+    const v = ref.current || e.currentTarget;
+    if (v.paused) {
+      v.play().catch(() => {});
+      setIsPlaying(true);
+    } else {
+      v.pause();
+      setIsPlaying(false);
+    }
+  };
+
   return (
     <video
       ref={ref}
@@ -44,12 +56,16 @@ function ChapterVideo({ src, poster, alt }) {
       loop
       playsInline
       preload="none"
-      aria-label={alt}
+      aria-label={`${alt} — click to ${isPlaying ? "pause" : "play"}`}
+      role="button"
+      tabIndex={0}
       style={{ cursor: "pointer" }}
-      onClick={(e) => {
-        const v = e.currentTarget;
-        if (v.paused) v.play().catch(() => {});
-        else v.pause();
+      onClick={togglePlay}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          togglePlay(e);
+        }
       }}
     />
   );
