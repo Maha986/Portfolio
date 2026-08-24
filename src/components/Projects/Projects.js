@@ -13,6 +13,8 @@ import idonatioDemo from "../../Assets/Projects/videos/iDonatio.mp4";
 import univisionDemo from "../../Assets/Projects/videos/Univision.mp4";
 import trackerDemo from "../../Assets/Projects/videos/tracker-fieldwork.mp4";
 import metanoiaDemo from "../../Assets/Projects/videos/metanoia-2.mp4";
+import inclusenseDemo from "../../Assets/Projects/videos/inclusense.mp4";
+import adminDemo from "../../Assets/Projects/videos/Admin.mp4";
 
 const WORK = [
   {
@@ -22,7 +24,7 @@ const WORK = [
     description:
       "A single line of code that adds text resizing, high-contrast modes, text-to-speech, and screen-reader support to any website. Built in-house at Radium — a natural extension of the accessibility work behind Canon's design system.",
     liveLink: "https://inclusense.eu/",
-    emptyLabel: "Demo coming soon",
+    video: inclusenseDemo,
   },
   {
     title: "Radium — the agency's own site",
@@ -75,7 +77,7 @@ const WORK = [
     languages: "React",
     description:
       "An internal admin dashboard for managing users, content, and day-to-day operations — the unglamorous but essential control room behind a production product.",
-    emptyLabel: "Demo coming soon",
+    video: adminDemo,
   },
 ];
 
